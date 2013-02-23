@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ Esri Inc. licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<gptConfig version="10.0.0.200">
+  
+  <databaseReference name="gpt" jndiName="jdbc/gpt"/>
+  
+  <catalog gptTablePrefix="GPT_">
+      
+    <search
+      searchTimeoutMillisecs="10000"
+      distributedSearchTimeoutMillisecs="5000"
+      distributedSearchMaxSelectedSites="5"
+      searchResultsPerPage="10"
+      searchResultsReviewsShown="all"
+      maxSavedSearches="10"
+      allowExternalSiteSearch="true">
+      
+      <repositories>
+        <repository key="local" 
+          class="com.esri.gpt.catalog.search.SearchEngineLocal"
+          labelResourceKey="catalog.search.searchSite.defaultsite"
+          abstractResourceKey="catalog.search.searchSite.defaultsite.abstract"/>
+     
+
+        <repository key="^$" 
+          class="com.esri.gpt.catalog.search.SearchEngineLocal"
+          labelResourceKey=""
+          abstractResourceKey=""/> 
+       
+       <repository key="SharePoint"  
+          class="com.esri.gpt.catalog.search.SearchEngineRest"
+          labelResourceKey="catalog.search.searchSite.sharePoint"
+          abstractResourceKey="catalog.search.searchSite.sharePoint.abstract">
+                <parameter key="endPointSearchUrl" 
+            value="http://pswebsp/SearchCenter/_layouts/srchrss.aspx?k={searchTerms}&amp;start={startIndex}"/>  
+           
+          <parameter key="profileId" 
+             value="urn:esri:gpt:HTTP:XML:SHAREPOINT" /> 
+          <parameter key="defaultParamValues"
+              value="k&#x2714;DefaultToPreventExceptionOnEmptyKeyword"/>     
+         </repository>
+       
+  
+        <repository key="ArcGIS.COM"  
+          class="com.esri.gpt.catalog.search.SearchEngineRest"
+          labelResourceKey="catalog.search.searchSite.agsonline"
+          abstractResourceKey="catalog.search.searchSite.agsonline.abstract">
+          <parameter key="endPointSearchUrl" 
+              value="http://www.arcgis.com/sharing/search?q={searchTerms}&amp;start={startIndex}&amp;num={count}&amp;focus={gpt:contenttype?}&amp;f=json"/>  
+          <parameter key="defaultParamValues"
+              value="q&#x2714;access:shared || access:public || access:private "/>  
+          <parameter key="profileId" 
+              value="urn:esri:gpt:HTTP:JSON:ESRI:AGSONLINE" />
+          <parameter key="gpt:contentType"
+              value="liveMap&#x2714;maps&#x2715;application&#x2714;applications"/>     
+        </repository>
+
+        <repository key="ArcGIS.COM|ArcGISOnline|ArcGISOnline2"  
+          class="com.esri.gpt.catalog.search.SearchEngineRest"
+          labelResourceKey=""
+          abstractResourceKey="">
+          <parameter key="endPointSearchUrl" 
+              value="http://www.arcgis.com/sharing/search?q={searchTerms}&amp;start={startIndex}&amp;num={count}&amp;f=json"/>  
+          <parameter key="defaultParamValues"
+              value="q&#x2714;access:shared || access:public || access:private "/>  
+          <parameter key="profileId" 
+              value="urn:esri:gpt:HTTP:JSON:ESRI:AGSONLINE" /> 
+          <parameter key="gpt:contentType"
+              value="liveMap&#x2714;maps&#x2715;application&#x2714;applications"/>    
+        </repository>
+               
+
+        <repository key="*" 
+          class="com.esri.gpt.catalog.search.SearchEngineExternalCsw"/>
+      </repositories>
+    </search> 
+  	
+	<parameter key="webharvester.active" value="false"/>
+	
+	<parameter key="openls.geocode" value="http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/TA_Address_NA/GeocodeServer"/>
+	<parameter key="openls.reverseGeocode" value="http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/TA_Address_NA/GeocodeServer"/>
+	<parameter key="openls.portrayMap" value="http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"/>
+	<parameter key="openls.determineRoute" value="http://tasks.arcgisonline.com/ArcGIS/rest/services/NetworkAnalysis/ESRI_Route_NA/NAServer/Route"/> 
+	<parameter key="openls.determineRoute.mapService" value="http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"/>
+	<parameter key="openls.directory" value="http://trainingcloud.arcgis.com/ArcGIS/rest/services/Redlands_PointsOfInterest/MapServer/0"/>
+     
+     <!-- Directory field mappings -->
+	<parameter key="POIName" value="NAME"/>
+	<parameter key="PhoneNumber" value="TEL"/>
+	<parameter key="NAICS_type" value="TYPE"/>
+	<parameter key="NAICS_subtype" value="DESC_"/>
+	<parameter key="NAICS_category" value="TYPE"/>
+	<parameter key="SIC_type" value="TYPE"/>
+	<parameter key="SIC_code" value="OBJECTID"/>
+	<parameter key="SIC_subtype" value="DESC_"/>
+	<parameter key="SIC_category" value="TYPE"/>
+	<parameter key="Keyword" value="COMMENT"/>            
+  </catalog>
+    
+</gptConfig>

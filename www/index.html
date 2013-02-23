@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Send OpenLS Request</title>
+</head>
+
+
+<script language="javascript">
+
+  function sendRequest(form) {
+   	  if(checkRequest()==true) form.submit();
+  }
+
+  function checkRequest(){
+	  if(document.tester.body.value==""){
+	  		alert("First enter an OpenLS request.");
+			return false;
+	  } else return true;
+  }
+  
+  function setGetPortrayMapCapabilities(){
+	var request = '<?xml version="1.0" encoding="UTF-8"?>\n <XLS version="1.1" xmlns="http://www.opengis.net/xls" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.opengis.net/ols/1.1.0/PresentationService.xsd">\n <RequestHeader srsName="102100" clientName="ArcLocation" clientPassword=""/>\n <Request methodName="MapRequest" version="1.1" requestID=""> \n <GetPortrayMapCapabilitiesRequest>\n </GetPortrayMapCapabilitiesRequest>\n </Request>\n </XLS>';
+	document.tester.body.value = request;
+  }
+
+  function setPortrayMap(){
+	var request = '<?xml version="1.0" encoding="UTF-8"?>\n<XLS version="1.1" xmlns="http://www.opengis.net/xls" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.opengis.net/ols/1.1.0/PresentationService.xsd">\n  <RequestHeader srsName="102100" clientName="ArcLocation" clientPassword=""/>\n  <Request methodName="MapRequest" version="1.1" requestID="">\n    <PortrayMapRequest>\n      <Output width="400" height="300" format="image/png" content="URL">\n        <BBoxContext>\n          <gml:pos>-117.594 34.077</gml:pos>\n          <gml:pos>-117.524 34.133</gml:pos>\n        </BBoxContext>\n      </Output>\n      <Overlay>\n        <Position>\n          <gml:CircleByCenterPoint numArc="1">\n            <gml:pos>-117.554 34.10</gml:pos>\n            <gml:radius uom="">2000</gml:radius>\n          </gml:CircleByCenterPoint>\n        </Position>\n        <Style>\n          <StyleContent>boundaryColor=255,0,0;\n                        fillColor=255,0,0;\n                        fillTransparency=0.3;\n                        thickness=3;\n                        overlapLabel=true;\n          </StyleContent>\n        </Style>\n      </Overlay>\n    </PortrayMapRequest>\n  </Request>\n</XLS>';
+	document.tester.body.value = request;
+  }
+
+  function setRoute(){
+	var request = '<?xml version="1.0" encoding="UTF-8"?>\n<XLS version="1.1" xmlns="http://www.opengis.net/xls" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.opengis.net/ols/1.1.0/RouteService.xsd">\n  <RequestHeader clientName="ArcLocation" clientPassword=""/>\n  <Request methodName="RouteRequest" version="1.1" requestID="rte1">\n    <DetermineRouteRequest>\n      <RoutePlan>\n	<RoutePreference>Fastest</RoutePreference>\n	  <WayPointList>\n	    <StartPoint>\n	      <Position>\n		  <gml:Point>\n		    <gml:pos>-71.46 41.81</gml:pos>\n		  </gml:Point>\n		</Position>\n	    </StartPoint>\n	    <ViaPoint>\n		<Position>\n		  <gml:Point>\n		    <gml:pos>-71.45 41.77</gml:pos>\n		  </gml:Point>\n		</Position>\n	    </ViaPoint>\n	    <EndPoint>\n	      <Position>\n		  <gml:Point>\n		    <gml:pos>-71.48 41.80</gml:pos>\n		  </gml:Point>\n		</Position>\n	    </EndPoint>\n	  </WayPointList>\n        </RoutePlan>\n      <RouteInstructionsRequest format="text/plain" provideGeometry="false"/>\n      <RouteMapRequest>\n	<Output format="png8" height="400" width="400"/>\n      </RouteMapRequest>\n    </DetermineRouteRequest>\n  </Request>\n</XLS>\n';
+      document.tester.body.value = request;
+  }
+
+  function setDirectory(){
+	var request = '<?xml version="1.0" encoding="UTF-8"?>\n<XLS version="1.1" xmlns="http://www.opengis.net/xls" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.opengis.net/ols/1.1.0/DirectoryService.xsd">\n  <RequestHeader clientName="ArcLocation" clientPassword=""/>\n  <Request maximumResponses="5" methodName="DirectoryRequest" requestID="" version="1.1">\n    <DirectoryRequest>\n      <POILocation>\n        <Nearest>\n          <Position>\n            <gml:Point>\n              <gml:pos>-122.452372436 37.7725892713</gml:pos>\n            </gml:Point>\n          </Position>\n        </Nearest>\n      </POILocation>\n      <POIProperties>\n        <POIProperty name="SIC_type" value="Arts"/>\n      </POIProperties>\n    </DirectoryRequest>\n  </Request>\n</XLS>\n';
+    	document.tester.body.value = request;
+  }
+
+  function setGeocode(){
+	var request = '<?xml version="1.0" encoding="UTF-8"?>\n<XLS version="1.1" xmlns="http://www.opengis.net/xls" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.opengis.net/ols/1.1.0/LocationUtilityService.xsd">\n  <RequestHeader clientName="ArcLocation" clientPassword=""/>\n  <Request methodName="GeocodeRequest" version="1.1" requestID="">\n    <GeocodeRequest>\n      <Address countryCode="US">\n        <StreetAddress>\n          <Street>1 Freedom Rd</Street>\n        </StreetAddress>\n        <Place type="Municipality">Providence</Place>\n        <Place type="CountrySubdivision">RI</Place>\n        <PostalCode>02909</PostalCode>\n      </Address>\n    </GeocodeRequest>\n  </Request>\n</XLS>';
+      document.tester.body.value = request;
+  }
+
+  function setReverseGeocode(){
+	var request = '<?xml version="1.0" encoding="UTF-8"?>\n<XLS version="1.1" xmlns="http://www.opengis.net/xls" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.opengis.net/ols/1.1.0/LocationUtilityService.xsd">\n  <RequestHeader clientName="ArcLocation" clientPassword=""/>\n  <Request methodName="RevGcReq" version="1.1" requestID="">\n    <ReverseGeocodeRequest>\n      <Position>\n        <gml:Point>\n          <gml:pos>-71.458961673001 41.831760735431</gml:pos>\n        </gml:Point>\n      </Position>\n      <ReverseGeocodePreference>StreetAddress</ReverseGeocodePreference>\n    </ReverseGeocodeRequest>\n  </Request>\n</XLS>';
+      document.tester.body.value = request;
+  }
+
+  function clearRequest()
+  {
+    document.tester.body.value = "";
+  }
+
+</script>
+
+<body>
+<form id="tester" name="tester" action="openls.jsp" method="POST" >
+<table align="center" cellpadding="4" >
+<tr>
+    <td><b>Send OpenLS Request Utility</b></td>
+</tr>
+</table>
+<br><br>
+<table align="center" cellspacing="2" cellpadding="2" border="0">
+<tr>
+    <td align="right" valign="top"><b><i>URL: </i></b></td>
+    <td><input name="url" value="http://<serverName>/<contextPath>/OpenLSServlet" size="70" MAXLENGTH="100"/></td>
+</tr>
+</table>
+<br><br>
+<table align="center" cellpadding="2">
+<tr>
+<td><b><i>Service Group: </i></b></td>
+<td><input name="serviceGroup" value="XLS" size="20" MAXLENGTH="20"/></td>
+</tr>
+</table>
+
+<table align="center" cellpadding="2">
+<tr>	
+	<td><input type="button" value="Get Portray Map Capabilities" onclick="setGetPortrayMapCapabilities()"></td>
+    <td><input type="button" value="Portray Map" onclick="setPortrayMap()"></td>
+    <td><input type="button" value="Route" onclick="setRoute()"></td>
+    <td><input type="button" value="Directory" onclick="setDirectory()"></td>
+    <td><input type="button" value="Geocode" onclick="setGeocode()"></td>
+    <td><input type="button" value="Reverse Geocode" onclick="setReverseGeocode()"></td>
+</tr>
+</table>
+<table align="center" cellpadding="2">
+<tr>
+    <td><input type="button" width=50 value="Clear" onclick="clearRequest()"></td>
+    <td><input type="button" width=50 value="SEND" onclick="sendRequest(tester)"></td>
+</tr>
+</table>
+<table align="center" cellspacing="2" cellpadding="2" border="0">
+<tr>
+    <td align="right" valign="top"><b><i>Request: </i></b></td>
+ <td><textarea rows=25 cols=100 name="body"></textarea></td>
+</tr>
+</table>
+</form>
+</body>
+</html>
