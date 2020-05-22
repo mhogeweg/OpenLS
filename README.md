@@ -14,8 +14,6 @@ Presentation (Map Portrayal) Service and others.
 The OpenLS connector for ArcGIS Server enables the OGC interfaces on existing ArcGIS Server services for mapping,
 geocoding, routing, etc.
 
-Want to learn more? Try our [OpenLS sandbox](http://gptogc.esri.com/openls)!
-
 ## Support or Contact
 
 Contact us at [portal@esri.com](mailto:portal@esri.com) for questions and we’ll help you sort it out.
